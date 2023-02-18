@@ -1,4 +1,4 @@
-package com.arzjoo;
+package com.kashtidaran;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
