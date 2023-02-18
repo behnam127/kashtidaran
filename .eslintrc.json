@@ -1,0 +1,44 @@
+{
+  "env": {
+    // "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-shadow": ["error"],
+        "no-shadow": "off",
+        "no-undef": "off"
+      }
+    }
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "semi": "off",
+    "no-inline-style": 0,
+    "no-prototype-builtins": "off",
+    "react-native/no-inline-styles": "off",
+    "radix": "off",
+    "no-console": "off",
+    "eqeqeq": "off",
+    "react/prop-types": "off",
+    "no-empty": "off",
+    "no-extra-boolean-cast": "off"
+  },
+  "globals": {
+    "en": "readonly",
+    "imgOptions": "readonly"
+  }
+}
