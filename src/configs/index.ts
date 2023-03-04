@@ -1,6 +1,6 @@
-export const baseURL = 'https://aj.atozcrypto.net/api/v2'
-// export const baseURL = 'https://aj.atozcrypto.net/api/v2'
-export const defaultErrorMessage = 'کاربر گرامی سرمایکس ارتباط با سرور قطع شده, مجددا تلاش نمایید'
+export const baseURL = 'https://kashtidaran.com/api/v1'
+// export const baseURL = 'https://kashtidaran.com/api/v1'
+export const defaultErrorMessage = 'مشکلی به وجود آمده، مجددا تلاش نمایید'
 
 export { lightTheme } from './lightTheme'
 export { darkTheme } from './darkTheme'

@@ -7,21 +7,26 @@ import { GrayText } from 'components'
 import { navigator } from 'services/navigator'
 import { useAppSetting } from 'hooks/useAppSetting'
 import packageJson from '../../../package.json'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const APP_WIDTH = Dimensions.get('window').width
 const APP_HEIGHT = Dimensions.get('window').height
-const LOGO_WIDTH = APP_WIDTH * 0.3
+
 const ANIMATED_WIDTH = APP_WIDTH + 256
 
 const LOADING_ICON = require('assets/img/loading.png')
-const LOGO_RIGHT_SECTION = require('assets/img/splash/LogoR.png')
-const LOGO_LEFT_SECTION = require('assets/img/splash/LogoL.png')
+const LOGO_RIGHT_SECTION = require('assets/img/splash/i.jpg')
+const LOGO_LEFT_SECTION = require('assets/img/splash/i.jpg')
 const BACKGROUND_IMAGE = require('assets/img/splash/TransparentLogo.png')
+const LOGO = require('assets/img/splash/logo.png')
+const LOGO_TEXT = require('assets/img/splash/logoText.png')
 
 export function Splash({ navigation }) {
   const fadeAnim = new Animated.Value(0)
-  const offsetXLeft = new Animated.Value(-1000)
-  const offsetXRight = new Animated.Value(1000)
+  const offsetXTopLeft = new Animated.Value(-1000)
+  const offsetYTopRight = new Animated.Value(-1000)
+  const offsetXBottomRight = new Animated.Value(1000)
+  const offsetYBottomLeft = new Animated.Value(1000)
   const loadingIconSpinValue = new Animated.Value(0)
 
   const { theme = 'light' } = useContext(ThemeContext)
@@ -33,15 +38,29 @@ export function Splash({ navigation }) {
   const animatedLogo = () => {
     try {
       Animated.parallel([
-        Animated.timing(offsetXLeft, {
-          toValue: 0,
+        Animated.timing(offsetXTopLeft, {
+          toValue: -APP_WIDTH * 0.55,
           duration: 2000,
           delay: 0,
           easing: Easing.linear,
           useNativeDriver: true
         }),
-        Animated.timing(offsetXRight, {
-          toValue: 0,
+        Animated.timing(offsetYTopRight, {
+          toValue: -APP_HEIGHT * 0.27,
+          duration: 2000,
+          delay: 0,
+          easing: Easing.linear,
+          useNativeDriver: true
+        }),
+        Animated.timing(offsetXBottomRight, {
+          toValue: -APP_WIDTH * 0.05,
+          duration: 2000,
+          delay: 0,
+          easing: Easing.linear,
+          useNativeDriver: true
+        }),
+        Animated.timing(offsetYBottomLeft, {
+          toValue: APP_HEIGHT * 0.29,
           duration: 2000,
           delay: 0,
           easing: Easing.linear,
@@ -72,9 +91,18 @@ export function Splash({ navigation }) {
   useEffect(() => {
     animatedLogo()
     setTimeout(() => {
-      // navigator(navigation, 'Stacks', {}, 'reset')
-    }, 3000)
+      handleNextStep()
+    }, 2000)
   }, [])
+
+  const handleNextStep = async () => {
+    const token = await AsyncStorage.getItem('@token')
+    if (token !== null) {
+      navigator(navigation, 'Stacks', {}, 'reset')
+    } else {
+      navigator(navigation, 'Login', {}, 'reset')
+    }
+  }
 
   const loadingIconSpin = loadingIconSpinValue.interpolate({
     inputRange: [0, 1],
@@ -83,28 +111,31 @@ export function Splash({ navigation }) {
 
   return (
     <ScrollView style={styles.container}>
-      <Animated.View style={{ ...styles.animatedBgContainer, opacity: fadeAnim }}>
-        <Image source={backgroundImage} style={styles.backImage} />
+      <Animated.View style={{ ...styles.logoImageContainerBorder, opacity: fadeAnim }}></Animated.View>
+      <Animated.View style={{ ...styles.logoImageContainer, opacity: fadeAnim }}>
+        <Image source={LOGO} style={{ width: '50%', height: '50%', resizeMode: 'contain' }} />
+        <Image source={LOGO_TEXT} style={{ width: '80%', height: '50%', resizeMode: 'contain' }} />
       </Animated.View>
-
       <Section style={styles.splashWrapper}>
-        <Animated.View style={{ ...styles.logoImageContainer, opacity: fadeAnim }}>
-          <Animated.View style={{ ...styles.logoRLContainer }}>
-            <Animated.Image
-              style={{ ...styles.rightLogo, transform: [{ translateX: offsetXRight }] }}
-              source={LOGO_RIGHT_SECTION}
-            />
+        <Animated.View style={{ ...styles.logoRLContainer }}>
+          <Animated.Image
+            style={{ ...styles.topRightLogo, transform: [{ translateX: offsetXTopLeft }] }}
+            source={LOGO_LEFT_SECTION}
+          />
+          <Animated.Image
+            style={{ ...styles.topLeftLogo, transform: [{ translateY: offsetYTopRight }] }}
+            source={LOGO_RIGHT_SECTION}
+          />
 
-            <Animated.Image
-              style={{ ...styles.leftLogo, transform: [{ translateX: offsetXLeft }] }}
-              source={LOGO_LEFT_SECTION}
-            />
-          </Animated.View>
+          <Animated.Image
+            style={{ ...styles.BottomRightLogo, transform: [{ translateX: offsetXBottomRight }] }}
+            source={LOGO_LEFT_SECTION}
+          />
+          <Animated.Image
+            style={{ ...styles.BottomLeftLogo, transform: [{ translateY: offsetYBottomLeft }] }}
+            source={LOGO_LEFT_SECTION}
+          />
         </Animated.View>
-
-        <Animated.Image style={{ ...styles.loading, transform: [{ rotate: loadingIconSpin }] }} source={LOADING_ICON} />
-
-        <GrayText style={styles.versionNumber}>نسخه {packageJson.version}</GrayText>
       </Section>
     </ScrollView>
   )
@@ -112,46 +143,80 @@ export function Splash({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: EStyleSheet.value('$bg.white')
+    backgroundColor: EStyleSheet.value('$bg.black')
   },
   splashWrapper: {
     width: APP_WIDTH,
     height: APP_HEIGHT,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     flex: 1
   },
   logoImageContainer: {
-    width: LOGO_WIDTH,
-    height: LOGO_WIDTH,
+    width: APP_WIDTH * 0.5,
+    height: APP_WIDTH * 0.5,
     backgroundColor: EStyleSheet.value('$bg.white'),
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: APP_HEIGHT * 0.5 - APP_WIDTH * 0.25,
     borderRadius: 30,
-    shadowColor: '$text.black',
+    shadowColor: '$text.white',
     elevation: 10,
     shadowRadius: 10,
-    zIndex: 2
+    zIndex: 20,
+    padding: 10
+  },
+  logoImageContainerBorder: {
+    width: APP_WIDTH * 0.55,
+    height: APP_WIDTH * 0.55,
+    backgroundColor: EStyleSheet.value('$bg.whiteWithOpacity'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: APP_HEIGHT * 0.5 - APP_WIDTH * 0.275,
+    borderRadius: 30,
+    shadowColor: '$text.white',
+    elevation: 10,
+    shadowRadius: 10,
+    zIndex: 20
   },
   logoRLContainer: {
-    width: LOGO_WIDTH,
-    height: LOGO_WIDTH,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  leftLogo: {
-    width: LOGO_WIDTH * 0.8,
-    height: LOGO_WIDTH * 0.8,
+    width: APP_WIDTH * 0.3,
+    height: APP_WIDTH * 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    right: LOGO_WIDTH * 0.15
+    zIndex: 0
   },
-  rightLogo: {
-    width: LOGO_WIDTH * 0.8,
-    height: LOGO_WIDTH * 0.8,
+  topLeftLogo: {
+    width: APP_WIDTH * 0.5,
+    height: APP_HEIGHT * 0.5,
     position: 'absolute',
-    marginTop: LOGO_WIDTH * 0.2,
-    left: LOGO_WIDTH * 0.15
+    right: APP_WIDTH * 0.2
+  },
+  topRightLogo: {
+    width: APP_WIDTH * 0.5,
+    height: APP_HEIGHT * 0.6,
+    position: 'absolute',
+    bottom: APP_HEIGHT * 0.06,
+    right: APP_WIDTH * 0.2
+  },
+  BottomRightLogo: {
+    width: APP_WIDTH * 0.5,
+    height: APP_HEIGHT * 0.5,
+    position: 'absolute',
+    right: APP_WIDTH * 0.2,
+    top: APP_HEIGHT * 0.08
+  },
+  BottomLeftLogo: {
+    width: APP_WIDTH * 0.5,
+    height: APP_HEIGHT * 0.5,
+    position: 'absolute',
+    left: APP_WIDTH * 0.2
   },
   image: {
     width: ANIMATED_WIDTH,
@@ -175,6 +240,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    zIndex: 10
   }
 })

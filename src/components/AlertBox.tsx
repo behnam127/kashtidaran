@@ -24,6 +24,7 @@ const AlertBox = ({
   imageStyle,
   textStyle,
   text,
+  visible,
   alertType = 'notice',
   backgroundExistance = true
 }: alertTypes) => {
@@ -36,6 +37,7 @@ const AlertBox = ({
             ? EStyleSheet.value('$bg.veryLightYellow')
             : EStyleSheet.value('$bg.veryLightRed')
           : 'rgba(0,0,0,0)',
+        display: visible ? 'flex' : 'none',
         ...containerStyle
       }}>
       <Section style={{ ...commonStyles.row, ...styles.announcementChild }}>

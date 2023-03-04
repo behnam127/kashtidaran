@@ -3,13 +3,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button, Image, Section } from 'tags'
 import { commonStyles } from 'commonStyles'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { GrayText } from 'components'
+import { BlackText, GrayText } from 'components'
 import { navigator } from 'services/navigator'
 import { useSupport } from 'hooks/UseSupport'
 import { UserDataContext } from 'context'
 import { callApi } from 'services'
 import { defaultErrorMessage } from 'configs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
 type headerProps = {
   backgroundColor?: string
@@ -19,89 +20,52 @@ type headerProps = {
   navigation?: any
   rightIcon?: string
   isLogin?: boolean
+  leftIcon?: string
 }
 
-const NOTIFICATION = require('assets/icons/notification.png')
-const SUPPORT = require('assets/icons/support.png')
-const BACK = require('assets/icons/back.png')
-const GRID = require('assets/icons/grid.png')
+const HEADER_LOGO = require('assets/icon/logoText.png')
+const BELL = require('assets/icon/005-bell-school.png')
+const HEART = require('assets/icon/005-bell-school.png')
+const FILTER = require('assets/icon/005-bell-school.png')
+const BLOG_MENU = require('assets/icon/005-bell-school.png')
+const BACK = require('assets/icon/021-angle-right.png')
+const MENU = require('assets/icon/011-menu.png')
 const PROFILE = require('assets/icons/user.png')
 
-const Header = ({ backgroundColor, titleColor, title, navigation, rightIcon, isLogin }: headerProps) => {
+const appWidth = Dimensions.get('window').width - 250
+
+const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLogin }: headerProps) => {
   const { showSupport } = useSupport()
   const { userData, setUserData } = useContext(UserDataContext)
   const [redDot, setRedDot] = useState(false)
-
-  useEffect(() => {
-    getNotifications()
-    console.log('=========isLogin===========================')
-    console.log(isLogin)
-    console.log('====================================')
-  }, [])
-
-  const getNotifications = async () => {
-    try {
-      const token = await AsyncStorage.getItem('@token')
-
-      const notificationUrl = `/user/messages?count=25&page=1`
-      const notificationRequestConfig = {
-        method: 'GET',
-        url: notificationUrl,
-        timeout: 0,
-        headers: {
-          Authorization: token,
-          Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }
-      console.log(notificationRequestConfig)
-
-      const notificationResponse = await callApi(notificationRequestConfig)
-      const { message, status, data: notificationResponseData } = notificationResponse
-      console.log('notificationResponseData')
-      console.log(notificationResponseData)
-      if (notificationResponseData.unreadCount == 0) {
-        setRedDot(false)
-      } else {
-        setRedDot(true)
-        console.log(userData)
-      }
-    } catch (error) {
-      // setErrorText(defaultErrorMessage)
-    }
-  }
+  const navigation = useNavigation()
 
   return (
     <>
       <Section style={{ ...styles.container, backgroundColor: backgroundColor }}>
-        <Section style={commonStyles.row}>
+        <Section style={{ ...commonStyles.row, flex: 1 }}>
           <Button
-            onPress={() => navigator(navigation, 'MainMenu')}
-            style={{ ...styles.circles, marginLeft: 0, marginRight: EStyleSheet.value('$d.small') }}>
-            <Image source={rightIcon == 'menu' ? GRID : BACK} style={styles.icons} />
+            onPress={() => {
+              rightIcon == 'menu' ? navigator(navigation, 'Stacks') : navigation.canGoBack() && navigation.goBack()
+            }}
+            style={{ ...styles.squire }}>
+            <Image source={rightIcon == 'menu' ? MENU : BACK} style={styles.icons} />
           </Button>
-          <GrayText style={{ ...styles.text, color: titleColor }}>{title}</GrayText>
         </Section>
-        <Section style={{ ...commonStyles.row }}>
-          <Button onPress={showSupport} style={styles.circles}>
-            <Image source={SUPPORT} style={styles.icons} />
-          </Button>
-          <Button
-            onPress={() => {
-              userData.avatar && isLogin ? navigator(navigation, 'Notifications') : navigator(navigation, 'Login')
-            }}
-            style={{ ...styles.circles, display: userData.avatar && isLogin ? 'flex' : 'none' }}>
-            <Section style={{ ...styles.redDot, display: redDot ? 'flex' : 'none' }} />
-            <Image source={NOTIFICATION} style={styles.icons} />
-          </Button>
-          <Button
-            onPress={() => {
-              userData.avatar && isLogin ? navigator(navigation, 'ProfileMainPage') : navigator(navigation, 'Login')
-            }}
-            style={styles.circles}>
+        <Section style={styles.logoTextContainer}>
+          {title == 'logo' ? (
+            <Image source={HEADER_LOGO} style={styles.logoTextIcons} />
+          ) : (
+            <BlackText size={18}>{title}</BlackText>
+          )}
+        </Section>
+        <Section style={{ ...commonStyles.row, flex: 1 }}>
+          <Button onPress={showSupport} style={styles.squire}>
             <Image
-              source={userData.avatar && isLogin ? { uri: userData.avatar } : PROFILE}
-              style={userData.avatar && isLogin ? styles.profileImage : styles.icons}
+              source={
+                leftIcon == 'bell' ? BELL : leftIcon == 'heart' ? HEART : leftIcon == 'filter' ? FILTER : BLOG_MENU
+              }
+              style={styles.icons}
             />
           </Button>
         </Section>
@@ -120,21 +84,20 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     paddingLeft: EStyleSheet.value('$d.large'),
-    paddingRight: EStyleSheet.value('$d.large'),
-    marginBottom: EStyleSheet.value('$d.small')
+    paddingRight: EStyleSheet.value('$d.large')
   },
-  circles: {
+  squire: {
     width: 45,
     height: 45,
-    borderRadius: 100,
-    backgroundColor: 'rgba(0,0,0,0.03)',
-    marginLeft: EStyleSheet.value('$d.small'),
+    borderRadius: 15,
+    borderColor: 'rgba(0,0,0,0.03)',
+    borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },
   text: {
     fontSize: 14,
-    width: Dimensions.get('window').width - 250,
+    width: appWidth - 250,
     textAlign: 'left',
     marginLeft: 10
   },
@@ -151,7 +114,18 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 50,
-    tintColor: EStyleSheet.value('$bg.darkBlue')
+    tintColor: EStyleSheet.value('$text.darkGray')
+  },
+  logoTextContainer: {
+    ...commonStyles.row,
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  logoTextIcons: {
+    width: '50%',
+    alignSelf: 'center',
+    resizeMode: 'contain'
   },
   menuIcon: {
     width: 30,

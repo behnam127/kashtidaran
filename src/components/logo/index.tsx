@@ -10,27 +10,14 @@ type props = {
 }
 
 const Logo = ({ type = 'logo', theme = 'dark', style = styles.defaultLogo }: props) => {
-  let logo = require('assets/img/logo/dark/logo.png')
+  let logo = require('assets/img/logo/dark/logo-typed.png')
 
   switch (type) {
     case 'logo':
-      logo = theme === 'dark' ? require('assets/img/logo/dark/logo.png') : require('assets/img/logo/light/logo.png')
-      break
-    case 'logotype':
-      logo =
-        theme === 'dark' ? require('assets/img/logo/dark/logotype.png') : require('assets/img/logo/light/logotype.png')
-      break
-    case 'logotype-en':
       logo =
         theme === 'dark'
-          ? require('assets/img/logo/dark/logotype-en.png')
-          : require('assets/img/logo/light/logotype-en.png')
-      break
-    case 'logotype-fa':
-      logo =
-        theme === 'dark'
-          ? require('assets/img/logo/dark/logotype-fa.png')
-          : require('assets/img/logo/light/logotype-fa.png')
+          ? require('assets/img/logo/dark/logo-typed.png')
+          : require('assets/img/logo/light/logo-typed.png')
       break
   }
 
@@ -41,6 +28,7 @@ const styles = EStyleSheet.create({
   defaultLogo: {
     width: 150,
     height: 150,
+    marginTop: 100,
     resizeMode: 'contain',
     position: 'absolute'
   }

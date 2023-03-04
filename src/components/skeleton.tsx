@@ -20,7 +20,7 @@ export function Skeleton({ children, display = true }: skeletonTypes) {
         useNativeDriver: true
       })
     ).start()
-  }, [])
+  }, [offsetXRight])
 
   return (
     <Section style={{ ...styles.container, display: display === true ? 'flex' : 'none' }}>
