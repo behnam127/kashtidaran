@@ -1,6 +1,16 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Blog, BlogSingle, HomeScreen, Login, LoginOtp, Splash, UserInfo } from 'pages'
+import {
+  AdvertiseArchive,
+  AdvertiseSingle,
+  Blog,
+  BlogSingle,
+  HomeScreen,
+  Login,
+  LoginOtp,
+  Splash,
+  UserInfo
+} from 'pages'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Image, Section, Text } from 'tags'
 
@@ -16,6 +26,15 @@ function Stacks() {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Blog" component={Blog} />
       <Stack.Screen name="BlogSingle" component={BlogSingle} />
+      <Stack.Screen name="AdvertiseSingle" component={AdvertiseSingle} />
+    </Stack.Navigator>
+  )
+}
+function CommercialStacks() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="AdvertiseArchive" component={AdvertiseArchive} />
+      <Stack.Screen name="AdvertiseSingle" component={AdvertiseSingle} />
     </Stack.Navigator>
   )
 }
@@ -46,14 +65,15 @@ const tabsScreenOptions = {
 export default function Router() {
   return (
     <Tab.Navigator screenOptions={tabsScreenOptions}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Splash"
         component={Splash}
         options={{
           tabBarStyle: { display: 'none' },
           tabBarItemStyle: { display: 'none' }
         }}
-      />
+      /> */}
+
       <Tab.Screen
         name="Stacks"
         component={Stacks}
@@ -118,8 +138,8 @@ export default function Router() {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Stacks}
+        name="CommercialStacks"
+        component={CommercialStacks}
         options={{
           tabBarLabel: () => <Text style={{ display: 'none' }} />,
           tabBarIcon: ({ size, color }) => {

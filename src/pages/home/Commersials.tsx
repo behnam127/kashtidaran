@@ -84,6 +84,12 @@ const Commercials = ({ title }: commercialTypes) => {
       <Button onPress={() => navigator(navigation, 'BlogSingle', { slug })} style={styles.itemsContainer}>
         {/* <Image source={{ uri: item.picture }} style={styles.itemsImage} /> */}
         <Image source={item.image} style={styles.itemsImage} />
+        <BlackText size={9} style={styles.statusN}>
+          نمایشگاه آنلاین
+        </BlackText>
+        <BlackText size={9} style={styles.statusF}>
+          فوری
+        </BlackText>
         <BlackText size={11} style={styles.itemTitle}>
           {item.title}
         </BlackText>
@@ -231,5 +237,27 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: EStyleSheet.value('$bg.gray'),
     margin: 20
+  },
+  statusN: {
+    borderRadius: 15,
+    padding: 10,
+    paddingBottom: 5,
+    paddingTop: 5,
+    color: EStyleSheet.value('$text.white'),
+    backgroundColor: EStyleSheet.value('$bg.darkBlue'),
+    position: 'absolute',
+    top: 10,
+    left: 10
+  },
+  statusF: {
+    borderRadius: 15,
+    padding: 10,
+    paddingBottom: 5,
+    paddingTop: 5,
+    color: EStyleSheet.value('$text.white'),
+    backgroundColor: EStyleSheet.value('$bg.yellow'),
+    position: 'absolute',
+    top: 10,
+    right: 10
   }
 })

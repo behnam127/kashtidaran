@@ -44,6 +44,7 @@ export const lightTheme = (WINDOW_WIDTH: number) => ({
   },
   $border: {
     darkBlueAlpha: '#3e98d4',
+    white: '#fff',
     light: '#f2f2f2',
     medium: '#e5e5e5e5',
     dark: '#dcdcdc',
