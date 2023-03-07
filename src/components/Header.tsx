@@ -25,7 +25,7 @@ type headerProps = {
 
 const HEADER_LOGO = require('assets/icon/logoText.png')
 const BELL = require('assets/icon/005-bell-school.png')
-const CALL = require('assets/icon/005-bell-school.png')
+const CALL = require('assets/icon/041-phone-call.png')
 const HEART = require('assets/icon/005-bell-school.png')
 const FILTER = require('assets/icon/005-bell-school.png')
 const BLOG_MENU = require('assets/icon/005-bell-school.png')
@@ -59,7 +59,10 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
               onPress={() => {
                 rightIcon == 'menu' ? navigator(navigation, 'Stacks') : navigation.canGoBack() && navigation.goBack()
               }}
-              style={{ ...styles.squire, borderColor: backgroundColor == 'blue' && 'rgba(256,256,256,0.3)' }}>
+              style={{
+                ...styles.squire,
+                borderColor: backgroundColor == 'blue' ? 'rgba(256,256,256,0.3)' : 'rgba(0,0,0,0.03)'
+              }}>
               <Image
                 source={rightIcon == 'menu' ? MENU : BACK}
                 style={{ ...styles.icons, tintColor: backgroundColor == 'blue' && EStyleSheet.value('$text.white') }}
@@ -70,7 +73,11 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
             {title == 'logo' ? (
               <Image source={HEADER_LOGO} style={styles.logoTextIcons} />
             ) : (
-              <BlackText size={18} style={{ color: backgroundColor == 'blue' && EStyleSheet.value('$text.white') }}>
+              <BlackText
+                size={18}
+                style={{
+                  color: backgroundColor == 'blue' ? EStyleSheet.value('$text.white') : EStyleSheet.value('$text.black')
+                }}>
                 {title}
               </BlackText>
             )}
@@ -78,7 +85,10 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
           <Section style={{ ...commonStyles.row }}>
             <Button
               onPress={showSupport}
-              style={{ ...styles.squire, borderColor: backgroundColor == 'blue' && 'rgba(256,256,256,0.3)' }}>
+              style={{
+                ...styles.squire,
+                borderColor: backgroundColor == 'blue' ? 'rgba(256,256,256,0.3)' : 'rgba(0,0,0,0.03)'
+              }}>
               <Image
                 source={
                   leftIcon == 'bell' ? BELL : leftIcon == 'heart' ? HEART : leftIcon == 'filter' ? FILTER : BLOG_MENU
