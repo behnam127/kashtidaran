@@ -2,13 +2,14 @@ import React from 'react'
 import { ViewStyle } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { shadow } from 'react-native-paper'
-import { Button, Text } from 'tags'
+import { Button, Image, Text } from 'tags'
 
 type FullWidthButtonTypes = {
   text: string
   style?: ViewStyle
   textStyle?: ViewStyle
   shadow?: boolean
+  ICON?: any
   state?:
     | 'activeBlue'
     | 'activeGray'
@@ -26,6 +27,7 @@ export function FullWidthButton({
   text,
   style,
   textStyle,
+  ICON,
   shadow = false,
   state = 'activeBlue',
   onPress
@@ -53,6 +55,7 @@ export function FullWidthButton({
       disabled={state === 'disable' ? true : false}
       onPress={onPress}
       style={{ ...Object.assign({}, styleObject.button, styleObject.shadow, style), elevation: shadow ? 10 : 0 }}>
+      <Image source={ICON} style={{ ...Object.assign({}, styleObject.icon), display: ICON ? 'flex' : 'none' }} />
       <Text bold style={{ ...styleObject.text, ...textStyle }}>
         {text}
       </Text>
@@ -62,6 +65,7 @@ export function FullWidthButton({
 
 const LightRedStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.veryLightRed',
     justifyContent: 'center',
@@ -74,11 +78,19 @@ const LightRedStyle = EStyleSheet.create({
   },
   shadow: {
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const lightBlueStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.darkBlueAlpha',
     justifyContent: 'center',
@@ -92,11 +104,19 @@ const lightBlueStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$bg.darkBlueAlpha'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const activeGreenStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.green',
     justifyContent: 'center',
@@ -110,11 +130,19 @@ const activeGreenStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const activeYellowStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.yellow',
     justifyContent: 'center',
@@ -128,11 +156,19 @@ const activeYellowStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const WhiteStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.white',
     justifyContent: 'center',
@@ -148,10 +184,18 @@ const WhiteStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 const grayStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.gray',
     justifyContent: 'center',
@@ -165,11 +209,19 @@ const grayStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const disableStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     backgroundColor: '$bg.lightBlue',
     justifyContent: 'center',
@@ -183,11 +235,19 @@ const disableStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const withBorderStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     // backgroundColor: '$bg.gray',
     justifyContent: 'center',
@@ -203,11 +263,19 @@ const withBorderStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })
 
 const deactiveWithBorderStyle = EStyleSheet.create({
   button: {
+    flexDirection: 'row',
     alignSelf: 'stretch',
     // backgroundColor: '$bg.gray',
     justifyContent: 'center',
@@ -223,5 +291,12 @@ const deactiveWithBorderStyle = EStyleSheet.create({
   shadow: {
     elevation: 10,
     shadowColor: '$shadow'
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    resizeMode: 'contain',
+    marginRight: 10,
+    tintColor: '$text.white'
   }
 })

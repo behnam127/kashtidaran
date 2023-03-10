@@ -133,7 +133,7 @@ const AdvertiseSingle = ({ route }) => {
           </Skeleton>
         </>
       ) : (
-        <ScrollView style={{ height: '100%' }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ height: '100%' }}>
           <Section style={styles.container}>
             {/* <Image style={styles.titleImage} source={{ uri: DATA.picture }} /> */}
             <Image style={styles.titleImage} source={BANNER} />
@@ -178,8 +178,8 @@ const AdvertiseSingle = ({ route }) => {
                 scrollThreshold={0}
                 showsVerticalScrollIndicator={false}
                 allowDivider={true}
-                fadeSize={appHeight * 0.5}
-                style={{ height: showTheRest ? null : 300, width: '100%', display: 'flex' }}
+                fadeSize={appHeight * 0.4}
+                style={{ height: showTheRest ? null : 400, width: '100%', display: 'flex' }}
                 bounces={true}
                 fadeColors={['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 1)']}>
                 <BlackText>

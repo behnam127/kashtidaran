@@ -5,13 +5,14 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { BlackText } from 'components'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Header } from 'components/Header'
-import { Image, ScrollView, Section } from 'tags'
+import { Button, Image, ScrollView, Section } from 'tags'
 import Search from './Search'
 import TopSlider from './TopSlider'
 import Commercials from './Commersials'
 import AccessBtn from './AccessBtn'
 import News from './News'
 import { useNavigation } from '@react-navigation/native'
+import { navigator } from 'services/navigator'
 
 const BANNER2 = require('assets/img/5.png')
 const BANNER3 = require('assets/img/6.png')
@@ -26,7 +27,7 @@ const HomeScreen = () => {
     <SafeAreaView>
       <Header rightIcon="menu" leftIcon="bell" title={'logo'} backgroundColor={EStyleSheet.value('$bg.white')} />
       <Section style={styles.mainContainer}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Search />
           <TopSlider />
           <Commercials title="جدیدترین آگهی ها" />
@@ -36,9 +37,9 @@ const HomeScreen = () => {
             <Image style={styles.itemImage} source={BANNER2} />
           </Section>
           <Commercials title="کاریابی و استخدام" />
-          <Section style={styles.itemContainer}>
+          <Button onPress={() => navigator(navigation, 'WetherArcive')} style={styles.itemContainer}>
             <Image style={styles.itemImage} source={BANNER3} />
-          </Section>
+          </Button>
           <News title="اخبار ومقالات" />
         </ScrollView>
       </Section>

@@ -1,23 +1,18 @@
 import { Dimensions, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Button, Image, ScrollView, Section, Text } from 'tags'
-import { HeaderWithDarkBG } from 'components/HeaderWithDarkBG'
+import React, { useState } from 'react'
+import { Image, ScrollView, Section } from 'tags'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { AppInput, BlackText, FullWidthButton, GrayText } from 'components'
+import { BlackText, GrayText } from 'components'
 import { commonStyles } from 'commonStyles'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { callApi } from 'services'
-import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import RenderHtml from 'react-native-render-html'
-import BlogComments from './BlogComments'
 import { Skeleton } from 'components/skeleton'
-import { dateFormater } from 'services/dateFormatter'
 import { Header } from 'components/Header'
 import { useNavigation } from '@react-navigation/native'
 
-const DATE_ICON = require('assets/icons/calendar.png')
+const DATE_ICON = require('assets/icon/025-calendar-date.png')
 const COMMENT_ICON = require('assets/icons/comment.png')
-const AUTHOR = require('assets/icon/009-user-avatar.png')
+const AUTHOR = require('assets/icon/024-user-avatar-1.png')
 const BANNER = require('assets/img/7.png')
 
 const BlogSingle = ({ route }) => {
@@ -84,7 +79,7 @@ const BlogSingle = ({ route }) => {
           </Skeleton>
         </>
       ) : (
-        <ScrollView style={{ height: '90%' }}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ height: '90%' }}>
           <Section style={styles.container}>
             {/* <Image style={styles.titleImage} source={{ uri: DATA.picture }} /> */}
             <Image style={styles.titleImage} source={BANNER} />

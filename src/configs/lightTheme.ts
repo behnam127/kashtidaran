@@ -9,6 +9,7 @@ export const lightTheme = (WINDOW_WIDTH: number) => ({
   $bg: {
     darkBlue: '#5aa6d8',
     darkBlueAlpha: '#3e98d4',
+    darkBluewithOpacity: 'rgba(62, 152, 212, 0.1)',
     lightBlue: '#ebf2f8',
     white: '#fff',
     whiteWithOpacity: 'rgba(256,256,256,0.5)',

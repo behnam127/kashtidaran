@@ -15,8 +15,10 @@ const APP_HEIGHT = Dimensions.get('window').height
 const ANIMATED_WIDTH = APP_WIDTH + 256
 
 const LOADING_ICON = require('assets/img/loading.png')
-const LOGO_RIGHT_SECTION = require('assets/img/splash/i.jpg')
-const LOGO_LEFT_SECTION = require('assets/img/splash/i.jpg')
+const LOGO_1 = require('assets/img/splash/i.jpg')
+const LOGO_2 = require('assets/img/splash/ship.png')
+const LOGO_3 = require('assets/img/splash/ship2.jpg')
+const LOGO_4 = require('assets/img/splash/ship3.png')
 const BACKGROUND_IMAGE = require('assets/img/splash/TransparentLogo.png')
 const LOGO = require('assets/img/splash/logo.png')
 const LOGO_TEXT = require('assets/img/splash/logoText.png')
@@ -110,7 +112,7 @@ export function Splash({ navigation }) {
   })
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Animated.View style={{ ...styles.logoImageContainerBorder, opacity: fadeAnim }}></Animated.View>
       <Animated.View style={{ ...styles.logoImageContainer, opacity: fadeAnim }}>
         <Image source={LOGO} style={{ width: '50%', height: '50%', resizeMode: 'contain' }} />
@@ -120,20 +122,20 @@ export function Splash({ navigation }) {
         <Animated.View style={{ ...styles.logoRLContainer }}>
           <Animated.Image
             style={{ ...styles.topRightLogo, transform: [{ translateX: offsetXTopLeft }] }}
-            source={LOGO_LEFT_SECTION}
+            source={LOGO_1}
           />
           <Animated.Image
             style={{ ...styles.topLeftLogo, transform: [{ translateY: offsetYTopRight }] }}
-            source={LOGO_RIGHT_SECTION}
+            source={LOGO_2}
           />
 
           <Animated.Image
             style={{ ...styles.BottomRightLogo, transform: [{ translateX: offsetXBottomRight }] }}
-            source={LOGO_LEFT_SECTION}
+            source={LOGO_3}
           />
           <Animated.Image
             style={{ ...styles.BottomLeftLogo, transform: [{ translateY: offsetYBottomLeft }] }}
-            source={LOGO_LEFT_SECTION}
+            source={LOGO_4}
           />
         </Animated.View>
       </Section>

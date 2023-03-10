@@ -3,7 +3,6 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Button, Image, ScrollView, Section } from 'tags'
 import { BlogItem } from './components/BlogItem'
 import { Pagination } from 'components/Pagination'
-import { HeaderWithDarkBG } from 'components/HeaderWithDarkBG'
 import { callApi } from 'services'
 import { Dimensions, StyleSheet } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
@@ -16,8 +15,7 @@ import { Header } from 'components/Header'
 import { useNavigation } from '@react-navigation/native'
 
 const appHeight = Dimensions.get('window').height
-const ARROW = require('assets/icons/leftArrow.png')
-const CALENDAR = require('assets/icons/calendar.png')
+const CALENDAR = require('assets/icon/025-calendar-date.png')
 const AUTHOR = require('assets/icon/009-user-avatar.png')
 const SEARCH = require('assets/icon/008-search.png')
 
@@ -152,7 +150,7 @@ export function Blog() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: appHeight - 150,
+    height: appHeight - 235,
     backgroundColor: EStyleSheet.value('$bg.white')
   },
   scrollContainer: {

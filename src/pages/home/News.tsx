@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 const TITLE_DOTS = require('assets/icon/titleDots.png')
 const DOBLE_ARROW_LEFT = require('assets/icon/019-angle-left.png')
 const DATE_ICON = require('assets/icon/004-clock.png')
-const LOCATION_ICON = require('assets/icons/location.png')
+const CALENDAR = require('assets/icon/025-calendar-date.png')
 
 type commercialTypes = {
   title?: string
@@ -92,8 +92,9 @@ const News = ({ title }: commercialTypes) => {
           <GrayText size={9}>{item.date}</GrayText>
         </Section>
         <Section style={styles.itemDateContainer}>
-          <Image source={LOCATION_ICON} style={styles.dateIcon} />
-          <GrayText size={9}>{item.location}</GrayText>
+          <Image source={CALENDAR} style={{ ...styles.dateIcon }} />
+          {/* <GrayText size={9}>{dateFormater({DATA.date})}</GrayText> */}
+          <GrayText size={9}>12-بهمن-1401</GrayText>
         </Section>
       </Button>
     )
@@ -217,7 +218,8 @@ const styles = StyleSheet.create({
   dateIcon: {
     width: 15,
     height: 15,
-    marginRight: 5
+    marginRight: 5,
+    tintColor: EStyleSheet.value('$text.gray')
   },
   skeletonLine: {
     width: '70%',

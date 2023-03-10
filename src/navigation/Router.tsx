@@ -5,11 +5,16 @@ import {
   AdvertiseSingle,
   Blog,
   BlogSingle,
+  ComponiesArchive,
+  ComponiesSingle,
+  FAQList,
   HomeScreen,
   Login,
   LoginOtp,
   Splash,
-  UserInfo
+  UserInfo,
+  WetherArcive,
+  WetherSingle
 } from 'pages'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Image, Section, Text } from 'tags'
@@ -24,9 +29,14 @@ function Stacks() {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="WetherArcive" component={WetherArcive} />
+      <Stack.Screen name="WetherSingle" component={WetherSingle} />
+      <Stack.Screen name="FAQList" component={FAQList} />
       <Stack.Screen name="Blog" component={Blog} />
       <Stack.Screen name="BlogSingle" component={BlogSingle} />
       <Stack.Screen name="AdvertiseSingle" component={AdvertiseSingle} />
+      <Stack.Screen name="AdvertiseArchive" component={AdvertiseArchive} />
+      <Stack.Screen name="ComponiesSingle" component={ComponiesSingle} />
     </Stack.Navigator>
   )
 }
@@ -35,6 +45,14 @@ function CommercialStacks() {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="AdvertiseArchive" component={AdvertiseArchive} />
       <Stack.Screen name="AdvertiseSingle" component={AdvertiseSingle} />
+    </Stack.Navigator>
+  )
+}
+function ComponiesStacks() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="ComponiesArchive" component={ComponiesArchive} />
+      <Stack.Screen name="ComponiesSingle" component={ComponiesSingle} />
     </Stack.Navigator>
   )
 }
@@ -90,8 +108,8 @@ export default function Router() {
         }}
       />
       <Tab.Screen
-        name="Commercial"
-        component={Stacks}
+        name="ComponiesArchive"
+        component={ComponiesStacks}
         options={{
           tabBarLabel: () => <Text style={{ display: 'none' }} />,
           tabBarIcon: ({ size, color }) => {

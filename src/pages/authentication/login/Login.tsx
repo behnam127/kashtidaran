@@ -5,12 +5,12 @@ import { Image, ScrollView, Section } from 'tags'
 import { commonStyles } from 'commonStyles'
 import { useLoading } from 'hooks/useLoading'
 import Logo from 'components/logo'
-import { Dimensions } from 'react-native'
+import { Dimensions, KeyboardAvoidingView } from 'react-native'
 import { callApi, requestDataStringify } from 'services'
 import { navigator } from 'services/navigator'
 import { useIsFocused } from '@react-navigation/native'
 
-const MOBILE_ICON = require('assets/icons/104-pin-code.png')
+const MOBILE_ICON = require('assets/icon/028-keypad.png')
 
 const Login = ({ navigation }) => {
   const [mobile, setMobile] = useState('')
@@ -65,33 +65,35 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.authLayoutContainer}>
-      <Section style={{ ...styles.logoContainer }}>
-        <Logo type={'logo'} theme={'light'} />
-      </Section>
-      <Section style={{ width: '100%', flex: 1, justifyContent: 'flex-end' }}>
-        <BlackText style={commonStyles.mb20}>شماره همراه</BlackText>
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-130}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.authLayoutContainer}>
+        <Section style={{ ...styles.logoContainer }}>
+          <Logo type={'logo'} theme={'light'} />
+        </Section>
+        <Section style={{ width: '100%', flex: 1, justifyContent: 'flex-end' }}>
+          <BlackText style={commonStyles.mb20}>شماره همراه</BlackText>
 
-        <AppInput
-          value={mobile}
-          maxLength={11}
-          keyboardType="numeric"
-          LeftElement={MobileIcon}
-          onChangeText={onChangeText}
-          direction="right"
-          hasErrorMessage={errorText == '' ? false : true}
-          errorText={errorText}
-          style={styles.inputStyle}
+          <AppInput
+            value={mobile}
+            maxLength={11}
+            keyboardType="numeric"
+            LeftElement={MobileIcon}
+            onChangeText={onChangeText}
+            direction="right"
+            hasErrorMessage={errorText == '' ? false : true}
+            errorText={errorText}
+            style={styles.inputStyle}
+          />
+        </Section>
+        <FullWidthButton
+          onPress={() => handleLogin()}
+          style={commonStyles.mt20}
+          text="دریافت کد تایید"
+          shadow={mobile ? true : false}
+          state={mobile ? 'activeBlue' : 'disable'}
         />
-      </Section>
-      <FullWidthButton
-        onPress={() => handleLogin()}
-        style={commonStyles.mt20}
-        text="دریافت کد تایید"
-        shadow={mobile ? true : false}
-        state={mobile ? 'activeBlue' : 'disable'}
-      />
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 export { Login }
