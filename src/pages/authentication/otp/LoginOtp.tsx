@@ -6,7 +6,7 @@ import { commonStyles } from 'commonStyles'
 import { UserDataContext } from 'context'
 import { useLoading } from 'hooks/useLoading'
 import Logo from 'components/logo'
-import { Dimensions, StyleSheet } from 'react-native'
+import { Dimensions, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { callApi, requestDataStringify } from 'services'
 import useCountDown from 'react-countdown-hook'
@@ -14,9 +14,8 @@ import { navigator } from 'services/navigator'
 import TextInputMask from 'react-native-text-input-mask'
 import AlertBox from 'components/AlertBox'
 
-const EDIT_ICON = require('assets/icons/editing.png')
-const TIMER_ICON = require('assets/icons/clock.png')
-const MOBILE_ICON = require('assets/icons/104-pin-code.png')
+const EDIT_ICON = require('assets/icon/030-pen-edit.png')
+const TIMER_ICON = require('assets/icon/031-clock-1.png')
 
 const LoginOtp = ({ navigation, route }) => {
   const [code, setCode] = useState('')
@@ -145,55 +144,57 @@ const LoginOtp = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.authLayoutContainer}>
-      <Section style={{ ...styles.logoContainer }}>
-        <Logo type={'logo'} theme={'light'} />
-      </Section>
-      <Section style={{ width: '100%', flex: 1, justifyContent: 'flex-end' }}>
-        <Section style={styles.defaultContainer}>
-          <Section style={styles.editContainer}>
-            <GrayText style={styles.phoneNumberText}>{mobile}</GrayText>
-            <Button onPress={() => navigator(navigation, 'Login')}>
-              <Image style={styles.editIcon} source={EDIT_ICON} />
-            </Button>
-          </Section>
-          <Section style={commonStyles.rowJustifySpaceBetween}>
-            <GrayText>کد تایید</GrayText>
-            {timer > 1000 && (
-              <Section style={styles.timerContainer}>
-                <GrayText style={{ top: 2 }}>{time}</GrayText>
-                <Image style={styles.timerIcon} source={TIMER_ICON} />
-              </Section>
-            )}
-          </Section>
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-130}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.authLayoutContainer}>
+        <Section style={{ ...styles.logoContainer }}>
+          <Logo type={'logo'} theme={'light'} />
+        </Section>
+        <Section style={{ width: '100%', flex: 1, justifyContent: 'flex-end' }}>
+          <Section style={styles.defaultContainer}>
+            <Section style={styles.editContainer}>
+              <GrayText style={styles.phoneNumberText}>{mobile}</GrayText>
+              <Button onPress={() => navigator(navigation, 'Login')}>
+                <Image style={styles.editIcon} source={EDIT_ICON} />
+              </Button>
+            </Section>
+            <Section style={commonStyles.rowJustifySpaceBetween}>
+              <GrayText>کد تایید</GrayText>
+              {timer > 1000 && (
+                <Section style={styles.timerContainer}>
+                  <GrayText style={{ top: 2 }}>{time}</GrayText>
+                  <Image style={styles.timerIcon} source={TIMER_ICON} />
+                </Section>
+              )}
+            </Section>
 
-          <Section style={{ marginTop: 10, marginBottom: 10 }}>
-            <TextInputMask
-              style={styles.maskInput}
-              value={otpCode}
-              direction="left"
-              textAlign="center"
-              keyboardType="numeric"
-              onChangeText={onChangeText}
-              placeholder={'-   -   -   -   -'}
-              mask={'[0]   [0]   [0]   [0]   [0]'}
+            <Section style={{ marginTop: 10, marginBottom: 10 }}>
+              <TextInputMask
+                style={styles.maskInput}
+                value={otpCode}
+                direction="left"
+                textAlign="center"
+                keyboardType="numeric"
+                onChangeText={onChangeText}
+                placeholder={'-   -   -   -   -'}
+                mask={'[0]   [0]   [0]   [0]   [0]'}
+              />
+            </Section>
+            <AlertBox
+              alertType="danger"
+              text={errorText}
+              visible={errorText ? true : false}
+              containerStyle={{ width: '100%' }}
+            />
+            <FullWidthButton
+              style={commonStyles.mt20}
+              onPress={() => handleNextStep()}
+              state={isTimerEnded ? 'activeYellow' : 'activeBlue'}
+              text={isTimerEnded ? 'ارسال مجدد کد' : 'تایید کنید'}
             />
           </Section>
-          <AlertBox
-            alertType="danger"
-            text={errorText}
-            visible={errorText ? true : false}
-            containerStyle={{ width: '100%' }}
-          />
-          <FullWidthButton
-            style={commonStyles.mt20}
-            onPress={() => handleNextStep()}
-            state={isTimerEnded ? 'activeYellow' : 'activeBlue'}
-            text={isTimerEnded ? 'ارسال مجدد کد' : 'تایید کنید'}
-          />
         </Section>
-      </Section>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 export { LoginOtp }

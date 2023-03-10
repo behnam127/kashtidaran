@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 const TITLE_DOTS = require('assets/icon/titleDots.png')
 const DOBLE_ARROW_LEFT = require('assets/icon/019-angle-left.png')
 const DATE_ICON = require('assets/icon/004-clock.png')
-const LOCATION_ICON = require('assets/icons/location.png')
+const LOCATION_ICON = require('assets/icon/023-location-pin.png')
 
 type commercialTypes = {
   title?: string
@@ -107,7 +107,9 @@ const Commercials = ({ title }: commercialTypes) => {
 
   return (
     <Section style={styles.container}>
-      <Button onPress={() => navigator(navigation, 'Blog')} style={{ ...commonStyles.row, ...styles.titleContainer }}>
+      <Button
+        onPress={() => navigator(navigation, 'AdvertiseArchive')}
+        style={{ ...commonStyles.row, ...styles.titleContainer }}>
         <Section style={{ ...styles.titleChildContainer }}>
           <Image style={styles.titleDots} source={TITLE_DOTS} />
           <BlackText style={styles.title}>{title}</BlackText>
@@ -222,7 +224,8 @@ const styles = StyleSheet.create({
   dateIcon: {
     width: 15,
     height: 15,
-    marginRight: 5
+    marginRight: 5,
+    tintColor: EStyleSheet.value('$text.gray')
   },
   skeletonLine: {
     width: '70%',

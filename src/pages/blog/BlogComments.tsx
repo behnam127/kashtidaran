@@ -7,7 +7,7 @@ import { commonStyles } from 'commonStyles'
 import { callApi } from 'services'
 
 const LIKE_ICON = require('assets/icons/like.png')
-const STAR_ICON = require('assets/icons/star.png')
+const STAR_ICON = require('assets/icon/046-star.png')
 const TITLE_DOTS = require('assets/icons/titleDots.png')
 
 const BlogComments = ({ slug }) => {

@@ -18,26 +18,39 @@ type headerProps = {
   title?: string | any
   rightBtnNavigation?: Function
   navigation?: any
-  rightIcon?: string
+  rightIcon?: 'menu' | 'back'
+  setShowFilterModal?: boolean
   isLogin?: boolean
-  leftIcon?: string
+  leftIcon?: 'bell' | 'heart' | 'filter' | 'blog_menu'
+  type?: 'normal' | 'advertise' | 'componies'
+  wetherSection?: boolean
 }
 
 const HEADER_LOGO = require('assets/icon/logoText.png')
 const BELL = require('assets/icon/005-bell-school.png')
 const CALL = require('assets/icon/041-phone-call.png')
-const HEART = require('assets/icon/005-bell-school.png')
-const FILTER = require('assets/icon/005-bell-school.png')
-const BLOG_MENU = require('assets/icon/005-bell-school.png')
+const HEART = require('assets/icon/047-heart.png')
+const FILTER = require('assets/icon/026-sliders.png')
+const BLOG_MENU = require('assets/icon/032-sort-descending.png')
 const BACK = require('assets/icon/021-angle-right.png')
 const MENU = require('assets/icon/011-menu.png')
 const DATE_ICON = require('assets/icon/004-clock.png')
-const LOCATION_ICON = require('assets/icons/location.png')
-const PROFILE = require('assets/icons/user.png')
+const LOCATION_ICON = require('assets/icon/023-location-pin.png')
+const SHARE = require('assets/icon/043-share.png')
 
 const appWidth = Dimensions.get('window').width - 250
 
-const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLogin }: headerProps) => {
+const Header = ({
+  backgroundColor,
+  titleColor,
+  type = 'normal',
+  setShowFilterModal,
+  title,
+  leftIcon,
+  rightIcon,
+  wetherSection = false,
+  isLogin
+}: headerProps) => {
   const { showSupport } = useSupport()
   const { userData, setUserData } = useContext(UserDataContext)
   const [redDot, setRedDot] = useState(false)
@@ -45,11 +58,7 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
 
   return (
     <>
-      <Section
-        style={{
-          ...styles.mainContainer,
-          backgroundColor: backgroundColor == 'blue' ? EStyleSheet.value('$bg.darkBlue') : backgroundColor
-        }}>
+      <Section style={{ ...Object.assign({}, styles.mainContainer, wetherSection && wetherStyle.container) }}>
         <Section
           style={{
             ...styles.container
@@ -60,7 +69,8 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
                 rightIcon == 'menu' ? navigator(navigation, 'Stacks') : navigation.canGoBack() && navigation.goBack()
               }}
               style={{
-                ...styles.squire,
+                ...Object.assign({}, styles.squire, wetherSection && wetherStyle.buttons),
+
                 borderColor: backgroundColor == 'blue' ? 'rgba(256,256,256,0.3)' : 'rgba(0,0,0,0.03)'
               }}>
               <Image
@@ -76,6 +86,7 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
               <BlackText
                 size={18}
                 style={{
+                  ...Object.assign({}, wetherSection && wetherStyle.headerTitle),
                   color: backgroundColor == 'blue' ? EStyleSheet.value('$text.white') : EStyleSheet.value('$text.black')
                 }}>
                 {title}
@@ -84,9 +95,9 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
           </Section>
           <Section style={{ ...commonStyles.row }}>
             <Button
-              onPress={showSupport}
+              onPress={leftIcon == 'filter' ? () => setShowFilterModal(true) : null}
               style={{
-                ...styles.squire,
+                ...Object.assign({}, styles.squire, wetherSection && wetherStyle.buttons),
                 borderColor: backgroundColor == 'blue' ? 'rgba(256,256,256,0.3)' : 'rgba(0,0,0,0.03)'
               }}>
               <Image
@@ -100,7 +111,7 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
         </Section>
       </Section>
 
-      {backgroundColor == 'blue' && (
+      {type == 'advertise' && (
         <>
           <Section style={styles.commersialContainer}>
             <Section style={styles.ComercialRow}>
@@ -129,11 +140,45 @@ const Header = ({ backgroundColor, titleColor, title, leftIcon, rightIcon, isLog
           <Section style={styles.roundDivider} />
         </>
       )}
+      {type == 'componies' && (
+        <>
+          <Section style={styles.commersialContainer}>
+            <Section style={styles.ComercialRow}>
+              <Section style={{ ...styles.commercialIconContainer }}>
+                <Image source={LOCATION_ICON} style={{ ...styles.commercialIcon }} />
+              </Section>
+              <Section style={{ ...styles.commercialIconContainer }}>
+                <Image source={SHARE} style={{ ...styles.commercialIcon }} />
+              </Section>
+            </Section>
+          </Section>
+          <Section style={styles.roundDivider} />
+        </>
+      )}
     </>
   )
 }
 
 export { Header }
+
+const wetherStyle = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0)',
+    top: 0,
+    zIndex: 10
+  },
+  buttons: {
+    backgroundColor: EStyleSheet.value('$bg.white')
+  },
+  headerTitle: {
+    backgroundColor: EStyleSheet.value('$bg.white'),
+    padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 20
+  }
+})
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -20,33 +20,33 @@ const AccessBtn = ({}) => {
   return (
     <Section style={styles.container}>
       <Section style={commonStyles.row}>
-        <Button style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={{ ...styles.icon }} source={SHIP} />
           <GrayText style={styles.btnText}>شناور دریایی</GrayText>
         </Button>
-        <Button style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={{ ...styles.icon }} source={SHIP2} />
           <GrayText style={styles.btnText}>تجهیزات دریایی</GrayText>
         </Button>
 
-        <Button onPress={() => navigator(navigation, 'DiscountCodeList')} style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={styles.icon} source={JOBS} />
-          <BlackText style={styles.btnText}>تجهیزات دریایی</BlackText>
+          <GrayText style={styles.btnText}>کاریابی و استخدام دریایی</GrayText>
         </Button>
       </Section>
       <Section style={commonStyles.row}>
-        <Button style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={{ ...styles.icon }} source={CHARTER} />
-          <GrayText style={styles.btnText}>چارترینگ دریایی</GrayText>
+          <GrayText style={styles.btnText}>اجاره کشتی و چارترینگ دریایی</GrayText>
         </Button>
-        <Button style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={{ ...styles.icon }} source={WAVE} />
           <GrayText style={styles.btnText}>خدمات دریایی</GrayText>
         </Button>
 
-        <Button onPress={() => navigator(navigation, 'DiscountCodeList')} style={styles.btn}>
+        <Button onPress={() => navigator(navigation, 'AdvertiseArchive')} style={styles.btn}>
           <Image style={styles.icon} source={SAILOR_HAT} />
-          <BlackText style={styles.btnText}>همه آگهی ها</BlackText>
+          <GrayText style={styles.btnText}>همه آگهی ها</GrayText>
         </Button>
       </Section>
     </Section>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 11,
-    marginTop: 10
+    marginTop: 10,
+    textAlign: 'center'
   }
 })

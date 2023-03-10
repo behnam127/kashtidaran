@@ -3,7 +3,6 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Button, Image, ScrollView, Section } from 'tags'
 import { BlogItem } from './components/BlogItem'
 import { Pagination } from 'components/Pagination'
-import { HeaderWithDarkBG } from 'components/HeaderWithDarkBG'
 import { callApi } from 'services'
 import { Dimensions, FlatList, StyleSheet } from 'react-native'
 import { Shadow } from 'react-native-shadow-2'
@@ -14,18 +13,20 @@ import { dateFormater } from 'services/dateFormatter'
 import { useLoading } from 'hooks/useLoading'
 import { Header } from 'components/Header'
 import { useNavigation } from '@react-navigation/native'
+import FilterModal from './FilterModal'
+
+const LOCATION = require('assets/icon/023-location-pin.png')
+const CLOCK = require('assets/icon/022-clock-time.png')
+const SEARCH = require('assets/icon/008-search.png')
 
 const appHeight = Dimensions.get('window').height
-const ARROW = require('assets/icons/leftArrow.png')
-const CALENDAR = require('assets/icons/calendar.png')
-const AUTHOR = require('assets/icon/009-user-avatar.png')
-const SEARCH = require('assets/icon/008-search.png')
 
 export function AdvertiseArchive() {
   // const [DATA, setData] = useState([])
   const [paginationVisibility, setPaginationVisibility] = useState(false)
   const { showLoading, hideLoading } = useLoading()
   const navigation = useNavigation()
+  const [showFilterModal, setShowFilterModal] = useState(false)
 
   const searchIcon = () => {
     return <Image style={styles.icon} source={SEARCH} />
@@ -132,6 +133,12 @@ export function AdvertiseArchive() {
         style={styles.itemContainer}>
         <Shadow viewStyle={styles.shadowStyle} startColor="rgba(0,0,0,0.05)">
           <Image style={styles.itemImage} source={item.image} />
+          <BlackText size={9} style={styles.statusN}>
+            نمایشگاه آنلاین
+          </BlackText>
+          <BlackText size={9} style={styles.statusF}>
+            فوری
+          </BlackText>
           <Section style={styles.contentWrapper}>
             {/* <Image style={styles.itemImage} source={{ uri: picture }} /> */}
             <Section style={styles.leftSection}>
@@ -140,14 +147,14 @@ export function AdvertiseArchive() {
               </BlackText>
               <Section style={styles.dateInfoContainer}>
                 <Section style={styles.itemDateContainer}>
-                  <Image source={AUTHOR} style={{ ...styles.dateIcon }} />
+                  <Image source={CLOCK} style={{ ...styles.dateIcon }} />
                   {/* <GrayText size={9}>{dateFormater({DATA.date})}</GrayText> */}
-                  <GrayText size={9}>محمد قاسمی</GrayText>
+                  <GrayText size={9}>1 ساعت پیش</GrayText>
                 </Section>
                 <Section style={styles.itemDateContainer}>
-                  <Image source={CALENDAR} style={{ ...styles.dateIcon }} />
+                  <Image source={LOCATION} style={{ ...styles.dateIcon }} />
                   {/* <GrayText size={9}>{dateFormater({DATA.date})}</GrayText> */}
-                  <GrayText size={9}>12-بهمن-1401</GrayText>
+                  <GrayText size={9}>بوشهر، جم</GrayText>
                 </Section>
               </Section>
             </Section>
@@ -159,7 +166,8 @@ export function AdvertiseArchive() {
 
   return (
     <Section style={styles.container}>
-      <Header title="آرشیو اخبار و مقالات" />
+      <Header setShowFilterModal={setShowFilterModal} title="آرشیو آگهی ها" leftIcon="filter" />
+      <FilterModal visible={showFilterModal} setShowFilterModal={setShowFilterModal} />
       <Section style={styles.searchContainer}>
         <AppInput
           placeholder="جستجو کنید..."
@@ -181,7 +189,8 @@ export function AdvertiseArchive() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: appHeight - 150,
+    height: appHeight - 235,
+    // paddingBottom: 20,
     backgroundColor: EStyleSheet.value('$bg.white')
   },
   scrollContainer: {
@@ -206,15 +215,16 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: 4,
     borderRadius: 6,
-    width: '48%',
+    width: '47%',
     alignContent: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin: 5
   },
   shadowStyle: {
     width: '100%',
     backgroundColor: EStyleSheet.value('$bg.white'),
     borderRadius: EStyleSheet.value('$d.small'),
-    paddingLeft: EStyleSheet.value('$d.small')
+    paddingLeft: 5
   },
   contentWrapper: {
     flexDirection: 'row',
@@ -229,7 +239,29 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: EStyleSheet.value('$d.small'),
     marginBottom: EStyleSheet.value('$d.small'),
-    marginRight: EStyleSheet.value('$d.medium')
+    marginRight: 5
+  },
+  statusN: {
+    borderRadius: 15,
+    padding: 10,
+    paddingBottom: 5,
+    paddingTop: 5,
+    color: EStyleSheet.value('$text.white'),
+    backgroundColor: EStyleSheet.value('$bg.darkBlue'),
+    position: 'absolute',
+    top: 10,
+    left: 15
+  },
+  statusF: {
+    borderRadius: 15,
+    padding: 10,
+    paddingBottom: 5,
+    paddingTop: 5,
+    color: EStyleSheet.value('$text.white'),
+    backgroundColor: EStyleSheet.value('$bg.yellow'),
+    position: 'absolute',
+    top: 10,
+    right: 15
   },
   leftSection: {
     padding: EStyleSheet.value('$d.small'),
